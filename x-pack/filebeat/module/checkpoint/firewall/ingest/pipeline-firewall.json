@@ -2,6 +2,24 @@
   "description" : "VPN and Firewall",
   "processors" : [
     {
+      "set" : {
+        "field": "observer.type",
+        "value": "firewall"
+      }
+    },
+    {
+      "set" : {
+        "field": "event.category",
+        "value": "network"
+      }
+    },
+    {
+      "set" : {
+        "field": "message",
+        "value": "Firewall {{event_action}}"
+      }
+    },
+    {
       "rename" : {
         "field": "checkpoint.xlatesrc",
         "target_field": "source.nat.ip",
@@ -34,12 +52,6 @@
       }
     },
     {
-      "set" : {
-        "field": "event.category",
-        "value": "network"
-      }
-    },
-    {
       "rename" : {
         "field": "checkpoint.action",
         "target_field": "event.action",
@@ -62,8 +74,8 @@
     },
     {
       "rename" : {
-        "field": "checkpoint.service_id",
-        "target_field": "network.application",
+        "field": "checkpoint.rule_name",
+        "target_field": "rule.name",
         "ignore_missing": true
       }
     },
@@ -86,18 +98,6 @@
         "field": "checkpoint.layer_name",
         "target_field": "network.name",
         "ignore_missing": true
-      }
-    },
-    {
-      "set" : {
-        "field": "message",
-        "value": "Firewall {{checkpoint.rule_action}}"
-      }
-    },
-    {
-      "set" : {
-        "field": "observer.type",
-        "value": "firewall"
       }
     }
   ]
