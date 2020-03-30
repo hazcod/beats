@@ -38,7 +38,19 @@
       "remove": {
         "field": [
           "syslog5425_sd",
-          "message"
+          "message",
+          "host.architecture",
+          "host.containerized",
+          "host.hostname",
+          "host.id",
+          "host.ip",
+          "host.mac",
+          "host.os.codename",
+          "host.os.family",
+          "host.os.kernel",
+          "host.os.name",
+          "host.os.platform",
+          "host.os.version"
         ],
         "ignore_missing": true
       }
@@ -89,6 +101,13 @@
       }
     },
     {
+      "rename" : {
+        "field": "checkpoint.service_id",
+        "target_field": "network.application",
+        "ignore_missing": true
+      }
+    },
+    {
       "rename": {
         "field": "checkpoint.ifdir",
         "target_field": "network.direction",
@@ -104,25 +123,42 @@
     },
     {
       "rename": {
+        "field": "checkpoint.bytes",
+        "target_field": "network.bytes",
+        "ignore_missing": true
+      }
+    },
+    {
+      "set": {
+        "field": "client.ip",
+        "value": "{{source.ip}}"
+      }
+    },
+    {
+      "rename": {
         "field": "checkpoint.dst",
         "target_field": "destination.ip",
         "ignore_missing": true
       }
     },
     {
-      "rename": {
-        "field": "checkpoint.ifname",
-        "target_field": "observer.ingress.interface.name",
-        "ignore_missing": true,
-        "if": "ctx.network?.direction == 'inbound'"
+      "set": {
+        "field": "server.ip",
+        "value": "{{destination.ip}}"
       }
     },
     {
       "rename": {
-        "field": "checkpoint.ifname",
+        "field": "checkpoint.server_inbound_interface",
+        "target_field": "observer.ingress.interface.name",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "checkpoint.server_inbound_interface",
         "target_field": "observer.egress.interface.name",
-        "ignore_missing": true,
-        "if": "ctx.network?.direction == 'outbound'"
+        "ignore_missing": true
       }
     },
     {
@@ -143,6 +179,104 @@
       "rename": {
         "field": "checkpoint.severity",
         "target_field": "event.severity",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "checkpoint.file_type",
+        "target_field": "file.type",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "checkpoint.file_name",
+        "target_field": "file.name",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "checkpoint.file_size",
+        "target_field": "file.size",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "checkpoint.file_md5",
+        "target_field": "file.hash.md5",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "checkpoint.file_sha1",
+        "target_field": "file.hash.sha1",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "checkpoint.file_sha256",
+        "target_field": "file.hash.sha256",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "checkpoint.received_bytes",
+        "target_field": "source.bytes",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "checkpoint.sent_bytes",
+        "target_field": "destination.bytes",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename" : {
+        "field": "checkpoint.packets",
+        "target_field": "network.packets",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "checkpoint.source_os",
+        "target_field": "source.os.name",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "checkpoint.source_user_name",
+        "target_field": "source.user.name",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename" : {
+        "field": "checkpoint.web_client_type",
+        "target_field": "user_agent.name",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename" : {
+        "field": "checkpoint.resource",
+        "target_field": "url.original",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename" : {
+        "field": "checkpoint.http_host",
+        "target_field": "url.domain",
         "ignore_missing": true
       }
     },
