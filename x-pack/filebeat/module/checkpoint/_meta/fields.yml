@@ -1,0 +1,10 @@
+- key: checkpoint
+  title: Checkpoint
+  description: >
+    Checkpoint Module
+  fields:
+    - name: checkpoint
+      type: group
+      description: >
+        Fields from Checkpoint logs.
+      fields:

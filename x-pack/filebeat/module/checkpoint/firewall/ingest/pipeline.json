@@ -1,0 +1,174 @@
+{
+  "description": "...",
+  "processors": [
+    {
+      "grok": {
+        "field": "message",
+        "patterns": [
+          "%{SYSLOG5424PRI}%{NONNEGINT:syslog5424_ver} +(?:%{TIMESTAMP_ISO8601:syslog5424_ts}|-) +(?:%{IPORHOST:syslog5424_host}|-) +(-|%{SYSLOG5424PRINTASCII:syslog5424_app}) +(-|%{SYSLOG5424PRINTASCII:syslog5424_proc}) +(?::-|%{SYSLOG5424PRINTASCII:syslog5424_msgid}) +\\[%{GREEDYDATA:syslog5425_sd}\\]$"
+        ]
+      }
+    },
+    {
+      "kv": {
+        "field": "syslog5425_sd",
+        "field_split": "; ",
+        "value_split": ":",
+        "trim_key": " ",
+        "trim_value": " ",
+        "prefix": "checkpoint.",
+        "strip_brackets": true,
+        "exclude_keys": [
+          "flags",
+          "layer_uuid",
+          "originsicname",
+          "__policy_id_tag",
+          "version",
+          "rounded_bytes",
+          "db_tag",
+          "update_service",
+          "server_inbound_bytes",
+          "server_inbound_packets",
+          "server_outbound_bytes",
+          "server_outbound_packets"
+        ]
+      }
+    },
+    {
+      "remove": {
+        "field": [
+          "syslog5425_sd",
+          "message"
+        ],
+        "ignore_missing": true
+      }
+    },
+    {
+      "set": {
+        "field": "event.created",
+        "value": "{{_ingest.timestamp}}"
+      }
+    },
+    {
+      "set": {
+        "field": "event.module",
+        "value": "checkpoint"
+      }
+    },
+    {
+      "set": {
+        "field": "observer.vendor",
+        "value": "Checkpoint"
+      }
+    },
+    {
+      "set": {
+        "field": "observer.product",
+        "value": "{{checkpoint.product}}"
+      }
+    },
+    {
+      "rename": {
+        "field": "checkpoint.loguid",
+        "target_field": "event.id",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "checkpoint.sequencenum",
+        "target_field": "event.sequence",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "checkpoint.service",
+        "target_field": "destination.port",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "checkpoint.ifdir",
+        "target_field": "network.direction",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "checkpoint.src",
+        "target_field": "source.ip",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "checkpoint.dst",
+        "target_field": "destination.ip",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "checkpoint.ifname",
+        "target_field": "observer.ingress.interface.name",
+        "ignore_missing": true,
+        "if": "ctx.network?.direction == 'inbound'"
+      }
+    },
+    {
+      "rename": {
+        "field": "checkpoint.ifname",
+        "target_field": "observer.egress.interface.name",
+        "ignore_missing": true,
+        "if": "ctx.network?.direction == 'outbound'"
+      }
+    },
+    {
+      "rename": {
+        "field": "checkpoint.proto",
+        "target_field": "network.iana_number",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "checkpoint.s_port",
+        "target_field": "source.port",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename": {
+        "field": "checkpoint.severity",
+        "target_field": "event.severity",
+        "ignore_missing": true
+      }
+    },
+    {
+      "pipeline": {
+        "if": "ctx.checkpoint.product == 'VPN-1 & FireWall-1'",
+        "name": "{< IngestPipeline "pipeline-firewall.json" >}"
+      }
+    },
+    {
+      "pipeline": {
+        "if": "ctx.checkpoint.product == 'SmartConsole'",
+        "name": "{< IngestPipeline "pipeline-console.json" >}"
+      }
+    },
+    {
+      "pipeline": {
+        "if": "ctx.checkpoint.product == 'Log Update'",
+        "name": "{< IngestPipeline "pipeline-log.json" >}"
+      }
+    },
+    {
+      "pipeline": {
+        "if": "ctx.checkpoint.product == 'Anti Malware'",
+        "name": "{< IngestPipeline "pipeline-malware.json" >}"
+      }
+    }
+  ]
+}
