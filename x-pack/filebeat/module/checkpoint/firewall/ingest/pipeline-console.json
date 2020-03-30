@@ -1,0 +1,85 @@
+{
+  "description" : "SmartConsole from Checkpoint",
+  "processors" : [
+    {
+      "rename" : {
+        "field": "checkpoint.client_ip",
+        "target_field": "client.ip",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename" : {
+        "field": "checkpoint.uid",
+        "target_field": "client.user.id",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename" : {
+        "field": "checkpoint.administrator",
+        "target_field": "client.user.name",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename" : {
+        "field": "checkpoint.subject",
+        "target_field": "message",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename" : {
+        "field": "checkpoint.objecttype",
+        "target_field": "event.action",
+        "ignore_missing": true
+      }
+    },
+    {
+      "set" : {
+        "field": "event.category",
+        "value": "database"
+      }
+    },
+    {
+      "set" : {
+        "field": "event.type",
+        "value": "change",
+        "if" : "ctx.message.contains('Manipulation')"
+      }
+    },
+    {
+      "rename" : {
+        "field": "checkpoint.objectname",
+        "target_field": "rule.name",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename" : {
+        "field": "checkpoint.ifdir",
+        "target_field": "network.direction",
+        "ignore_missing": true
+      }
+    },
+    {
+      "set" : {
+        "field": "event.outcome",
+        "value": "success"
+      }
+    },
+    {
+      "gsub": {
+        "field": "event.action",
+        "pattern": " ",
+        "replacement": "-"
+      }
+    },
+    {
+      "lowercase": {
+        "field": "event.action"
+      }
+    }
+  ]
+}
