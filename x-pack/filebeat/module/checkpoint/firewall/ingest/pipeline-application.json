@@ -22,7 +22,7 @@
     {
       "rename" : {
         "field": "checkpoint.app_name",
-        "target_field": "networ.application",
+        "target_field": "network.application",
         "ignore_missing": true
       }
     },
