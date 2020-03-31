@@ -37,14 +37,14 @@
     {
       "rename" : {
         "field": "checkpoint.app_rule_id",
-        "target_field": "event.rule.id",
+        "target_field": "rule.id",
         "ignore_missing": true
       }
     },
     {
       "rename" : {
         "field": "checkpoint.app_rule_name",
-        "target_field": "event.rule.name",
+        "target_field": "rule.name",
         "ignore_missing": true
       }
     },
