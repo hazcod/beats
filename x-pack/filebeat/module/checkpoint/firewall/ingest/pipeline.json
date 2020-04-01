@@ -149,14 +149,14 @@
     },
     {
       "rename": {
-        "field": "checkpoint.server_inbound_interface",
+        "field": "checkpoint.client_inbound_interface",
         "target_field": "observer.ingress.interface.name",
         "ignore_missing": true
       }
     },
     {
       "rename": {
-        "field": "checkpoint.server_inbound_interface",
+        "field": "checkpoint.client_inbound_interface",
         "target_field": "observer.egress.interface.name",
         "ignore_missing": true
       }
@@ -277,6 +277,34 @@
       "rename" : {
         "field": "checkpoint.http_host",
         "target_field": "url.domain",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename" : {
+        "field": "checkpoint.client_inbound_packets",
+        "target_field": "destination.packets",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename" : {
+        "field": "checkpoint.client_outbound_packets",
+        "target_field": "source.packets",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename" : {
+        "field": "checkpoint.client_inbound_bytes",
+        "target_field": "destination.bytes",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename" : {
+        "field": "checkpoint.client_outbound_bytes",
+        "target_field": "source.bytes",
         "ignore_missing": true
       }
     },

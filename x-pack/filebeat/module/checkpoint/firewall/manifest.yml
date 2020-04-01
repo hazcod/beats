@@ -16,4 +16,6 @@ ingest_pipeline:
   - ingest/pipeline-console.json
   - ingest/pipeline-log.json
   - ingest/pipeline-malware.json
+  - ingest/pipeline-application.json
+  - ingest/pipeline-sandblast.json
 input: config/firewall.yml
