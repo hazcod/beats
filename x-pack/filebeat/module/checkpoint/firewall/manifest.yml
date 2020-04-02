@@ -14,7 +14,8 @@ ingest_pipeline:
   - ingest/pipeline.json
   - ingest/pipeline-firewall.json
   - ingest/pipeline-console.json
-  - ingest/pipeline-log.json
+  - ingest/pipeline-dlp.json
+  - ingest/pipeline-identity.json
   - ingest/pipeline-malware.json
   - ingest/pipeline-application.json
   - ingest/pipeline-sandblast.json

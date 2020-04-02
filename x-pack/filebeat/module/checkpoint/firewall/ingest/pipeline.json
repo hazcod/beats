@@ -271,8 +271,8 @@
     },
     {
       "set" : {
-        "field": ["client.packets", "source.packets"]
-        "target_": "{{checkpoint.client_outbound_packets}}"
+        "field": ["client.packets", "source.packets"],
+        "target_": "{{checkpoint.client_outbound_packets}}",
         "ignore_missing": true
       }
     },
@@ -284,8 +284,8 @@
     },
     {
       "set" : {
-        "field": ["client.bytes", "source.bytes"]
-        "target_": "{{checkpoint.client_outbound_bytes}}"
+        "field": ["client.bytes", "source.bytes"],
+        "target_": "{{checkpoint.client_outbound_bytes}}",
         "ignore_missing": true
       }
     },
@@ -297,8 +297,8 @@
     },
     {
       "set" : {
-        "field": ["server.packets", "destination.packets"]
-        "target_": "{{checkpoint.server_outbound_packets}}"
+        "field": ["server.packets", "destination.packets"],
+        "target_": "{{checkpoint.server_outbound_packets}}",
         "ignore_missing": true
       }
     },
@@ -310,8 +310,8 @@
     },
     {
       "set" : {
-        "field": ["server.bytes", "destination.bytes"]
-        "target_": "{{checkpoint.server_outbound_bytes}}"
+        "field": ["server.bytes", "destination.bytes"],
+        "target_": "{{checkpoint.server_outbound_bytes}}",
         "ignore_missing": true
       }
     },
@@ -393,12 +393,12 @@
         "if": "ctx.checkpoint.product == 'Anti Malware'",
         "name": "{< IngestPipeline "pipeline-malware.json" >}"
       }
-    }
+    },
     {
       "remove" : {
         "field": "checkpoint.product",
         "ignore_missing": true
       }
-    },
+    }
   ]
 }
