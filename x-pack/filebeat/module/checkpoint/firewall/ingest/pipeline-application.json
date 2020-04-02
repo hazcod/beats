@@ -3,12 +3,6 @@
   "processors" : [
     {
       "set" : {
-        "field": "message",
-        "value": "Malicious Activity on {{checkpoint.scope}}. {{checkpoint.malware_action}}"
-      }
-    },
-    {
-      "set" : {
         "field": "event.category",
         "value": "network"
       }

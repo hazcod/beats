@@ -271,9 +271,14 @@
     },
     {
       "set" : {
-        "field": ["client.packets", "source.packets"],
-        "target_": "{{checkpoint.client_outbound_packets}}",
-        "ignore_missing": true
+        "field": "client.packets",
+        "value": "{{checkpoint.client_outbound_packets}}"
+      }
+    },
+    {
+      "set" : {
+        "field": "source.packets",
+        "value": "{{checkpoint.client_outbound_packets}}"
       }
     },
     {
@@ -284,9 +289,14 @@
     },
     {
       "set" : {
-        "field": ["client.bytes", "source.bytes"],
-        "target_": "{{checkpoint.client_outbound_bytes}}",
-        "ignore_missing": true
+        "field": "client.bytes",
+        "value": "{{checkpoint.client_outbound_bytes}}"
+      }
+    },
+    {
+      "set" : {
+        "field": "source.bytes",
+        "value": "{{checkpoint.client_outbound_bytes}}"
       }
     },
     {
@@ -297,9 +307,14 @@
     },
     {
       "set" : {
-        "field": ["server.packets", "destination.packets"],
-        "target_": "{{checkpoint.server_outbound_packets}}",
-        "ignore_missing": true
+        "field": "destination.packets",
+        "value": "{{checkpoint.server_outbound_packets}}"
+      }
+    },
+    {
+      "set" : {
+        "field": "server.packets",
+        "value": "{{checkpoint.server_outbound_packets}}"
       }
     },
     {
@@ -310,9 +325,14 @@
     },
     {
       "set" : {
-        "field": ["server.bytes", "destination.bytes"],
-        "target_": "{{checkpoint.server_outbound_bytes}}",
-        "ignore_missing": true
+        "field": "destination.bytes",
+        "value": "{{checkpoint.server_outbound_bytes}}"
+      }
+    },
+    {
+      "set" : {
+        "field": "server.bytes",
+        "value": "{{checkpoint.server_outbound_bytes}}"
       }
     },
     {
