@@ -29,9 +29,8 @@
     {
       "rename" : {
         "field": "checkpoint.app_risk",
-        "target_field": "event.severity",
+        "target_field": "event.risk_score",
         "ignore_missing": true,
-        "if": "ctx.event?.severity == null"
       }
     },
     {
@@ -45,13 +44,6 @@
       "rename" : {
         "field": "checkpoint.app_rule_name",
         "target_field": "rule.name",
-        "ignore_missing": true
-      }
-    },
-    {
-      "rename" : {
-        "field": "checkpoint.client_type_os",
-        "target_field": "source.os.name",
         "ignore_missing": true
       }
     },
@@ -80,6 +72,20 @@
       "rename" : {
         "field": "checkpoint.url",
         "target_field": "url.original",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename" : {
+        "field": "checkpoint.categories",
+        "target_field": "rule.category",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename" : {
+        "field": "checkpoint.usercheck_incident_uid",
+        "target_field": "destination.user.id",
         "ignore_missing": true
       }
     }

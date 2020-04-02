@@ -99,6 +99,13 @@
         "target_field": "network.name",
         "ignore_missing": true
       }
+    },
+    {
+      "rename" : {
+        "field": "checkpoint.start_time",
+        "target_field": "event.start",
+        "ignore_missing": true
+      }
     }
   ]
 }

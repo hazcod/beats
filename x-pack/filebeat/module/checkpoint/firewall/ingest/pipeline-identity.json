@@ -1,0 +1,31 @@
+{
+  "description" : "Identity Awareness",
+  "processors" : [
+    {
+      "set" : {
+        "field": "event.category",
+        "value": "network"
+      }
+    },
+    {
+      "set" : {
+        "field": "observer.type",
+        "value": "identity_awareness"
+      }
+    },
+    {
+      "rename" : {
+        "field": "checkpoint.src_machine_name",
+        "target_field": "source.domain",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename" : {
+        "field": "checkpoint.dst_machine_name",
+        "target_field": "destination.domain",
+        "ignore_missing": true
+      }
+    }
+  ]
+}

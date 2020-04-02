@@ -26,11 +26,7 @@
           "version",
           "rounded_bytes",
           "db_tag",
-          "update_service",
-          "server_inbound_bytes",
-          "server_inbound_packets",
-          "server_outbound_bytes",
-          "server_outbound_packets"
+          "update_service"
         ]
       }
     },
@@ -227,14 +223,14 @@
     {
       "rename": {
         "field": "checkpoint.received_bytes",
-        "target_field": "source.bytes",
+        "target_field": "destination.bytes",
         "ignore_missing": true
       }
     },
     {
       "rename": {
         "field": "checkpoint.sent_bytes",
-        "target_field": "destination.bytes",
+        "target_field": "source.bytes",
         "ignore_missing": true
       }
     },
@@ -242,13 +238,6 @@
       "rename" : {
         "field": "checkpoint.packets",
         "target_field": "network.packets",
-        "ignore_missing": true
-      }
-    },
-    {
-      "rename": {
-        "field": "checkpoint.source_os",
-        "target_field": "source.os.name",
         "ignore_missing": true
       }
     },
@@ -281,30 +270,103 @@
       }
     },
     {
-      "rename" : {
-        "field": "checkpoint.client_inbound_packets",
-        "target_field": "destination.packets",
+      "set" : {
+        "field": ["client.packets", "source.packets"]
+        "target_": "{{checkpoint.client_outbound_packets}}"
         "ignore_missing": true
       }
     },
     {
-      "rename" : {
+      "remove" : {
         "field": "checkpoint.client_outbound_packets",
-        "target_field": "source.packets",
         "ignore_missing": true
       }
     },
     {
-      "rename" : {
-        "field": "checkpoint.client_inbound_bytes",
-        "target_field": "destination.bytes",
+      "set" : {
+        "field": ["client.bytes", "source.bytes"]
+        "target_": "{{checkpoint.client_outbound_bytes}}"
         "ignore_missing": true
       }
     },
     {
-      "rename" : {
+      "remove" : {
         "field": "checkpoint.client_outbound_bytes",
-        "target_field": "source.bytes",
+        "ignore_missing": true
+      }
+    },
+    {
+      "set" : {
+        "field": ["server.packets", "destination.packets"]
+        "target_": "{{checkpoint.server_outbound_packets}}"
+        "ignore_missing": true
+      }
+    },
+    {
+      "remove" : {
+        "field": "checkpoint.server_outbound_packets",
+        "ignore_missing": true
+      }
+    },
+    {
+      "set" : {
+        "field": ["server.bytes", "destination.bytes"]
+        "target_": "{{checkpoint.server_outbound_bytes}}"
+        "ignore_missing": true
+      }
+    },
+    {
+      "remove" : {
+        "field": "checkpoint.server_outbound_bytes",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename" : {
+        "field": "checkpoint.to",
+        "target_field": "destination.user.email",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename" : {
+        "field": "checkpoint.from",
+        "target_field": "source.user.email",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename" : {
+        "field": "checkpoint.malware_action",
+        "target_field": "rule.description",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename" : {
+        "field": "checkpoint.matched_category",
+        "target_field": "rule.category",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename" : {
+        "field": "checkpoint.time",
+        "target_field": "@timestamp",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename" : {
+        "field": "checkpoint.product_family",
+        "target_field": "observer.type",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename" : {
+        "field": "checkpoint.reason",
+        "target_field": "message",
         "ignore_missing": true
       }
     },
@@ -332,5 +394,11 @@
         "name": "{< IngestPipeline "pipeline-malware.json" >}"
       }
     }
+    {
+      "remove" : {
+        "field": "checkpoint.product",
+        "ignore_missing": true
+      }
+    },
   ]
 }

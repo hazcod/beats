@@ -15,13 +15,6 @@
     },
     {
       "rename" : {
-        "field": "checkpoint.host_time",
-        "target_field": "event.created",
-        "ignore_missing": true
-      }
-    },
-    {
-      "rename" : {
         "field": "checkpoint.os_name",
         "target_field": "host.os.name",
         "ignore_missing": true
@@ -57,15 +50,9 @@
     },
     {
       "rename" : {
-        "field": "checkpoint.reason",
-        "target_field": "message",
+        "field": "checkpoint.first_detection",
+        "target_field": "event.start",
         "ignore_missing": true
-      }
-    },
-    {
-      "set" : {
-        "field": "@timestamp",
-        "value": "{{checkpoint.first_detection}}"
       }
     },
     {
