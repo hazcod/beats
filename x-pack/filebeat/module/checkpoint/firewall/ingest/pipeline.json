@@ -704,13 +704,6 @@
     },
     {
       "rename": {
-        "field": "checkpoint.src",
-        "target_field": "source.ip",
-        "ignore_missing": true
-      }
-    },
-    {
-      "rename": {
         "field": "checkpoint.s_port",
         "target_field": "source.port",
         "ignore_missing": true
