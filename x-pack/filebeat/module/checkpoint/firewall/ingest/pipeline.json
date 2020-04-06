@@ -115,14 +115,14 @@
     {
       "set" : {
         "field": "client.user.name",
-        "target_field": "{{checkpoint.administrator}}",
+        "value": "{{checkpoint.administrator}}",
         "if": "ctx.checkpoint?.administrator != null"
       }
     },
     {
       "set" : {
         "field": "source.user.name",
-        "target_field": "{{checkpoint.administrator}}",
+        "value": "{{checkpoint.administrator}}",
         "if": "ctx.checkpoint?.administrator != null"
       }
     },
