@@ -61,7 +61,7 @@
       Policy installation status for a specific blade.
 
   - name: layer_name
-    type: string
+    type: keyword
     description: >
       Layer name.
 
