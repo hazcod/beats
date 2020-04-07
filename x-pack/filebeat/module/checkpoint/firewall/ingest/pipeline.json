@@ -34,19 +34,15 @@
       "remove": {
         "field": [
           "syslog5425_sd",
+          "syslog5425_app",
+          "syslog5425_host",
+          "syslog5425_msgid",
+          "syslog5425_pri",
+          "syslog5425_proc",
+          "syslog5425_ts",
+          "syslog5425_ver",
           "message",
-          "host.architecture",
-          "host.containerized",
-          "host.hostname",
-          "host.id",
-          "host.ip",
-          "host.mac",
-          "host.os.codename",
-          "host.os.family",
-          "host.os.kernel",
-          "host.os.name",
-          "host.os.platform",
-          "host.os.version"
+          "host
         ],
         "ignore_missing": true
       }
@@ -55,6 +51,12 @@
       "set": {
         "field": "event.module",
         "value": "checkpoint"
+      }
+    },
+    {
+      "set": {
+        "field": "event.category",
+        "value": "network"
       }
     },
     {
@@ -183,10 +185,80 @@
       }
     },
     {
-      "rename": {
-        "field": "checkpoint.service",
-        "target_field": "destination.port",
-        "ignore_missing": true
+      "set" : {
+        "field": "destination.port",
+        "value": "{{checkpoint.service}}",
+        "if": "ctx.checkpoint?.service != null"
+      }
+    },
+    {
+      "set" : {
+        "field": "server.port",
+        "value": "{{checkpoint.service}}",
+        "if": "ctx.checkpoint?.service != null"
+      }
+    },
+    {
+      "set" : {
+        "field": "client.port",
+        "value": "{{checkpoint.s_port}}",
+        "if": "ctx.checkpoint?.s_port != null"
+      }
+    },
+    {
+      "set" : {
+        "field": "source.port",
+        "value": "{{checkpoint.s_port}}",
+        "if": "ctx.checkpoint?.s_port != null"
+      }
+    },
+    {
+      "set": {
+        "field": "event.category",
+        "value": "authentication",
+        "if": "ctx.checkpoint?.operation == 'Log In'"
+      }
+    },
+    {
+      "set" : {
+        "field": "event.kind",
+        "value": "alert",
+        "if": "['Prevent', 'Detect', 'Quarantine'].contains(ctx.checkpoint?.rule_action)"
+      }
+    },
+    {
+      "set" : {
+        "field": "event.kind",
+        "value": "event",
+        "if": "ctx.event?.kind == null"
+      }
+    },
+    {
+      "set" : {
+        "field": "event.outcome",
+        "value": "success",
+        "if": "['Accept', 'Allow'].contains(ctx.checkpoint?.rule_action)"
+      }
+    },
+    {
+      "set" : {
+        "field": "event.outcome",
+        "value": "success",
+        "if": "ctx.checkpoint?.audit_status == 'Success')"
+      }
+    },
+    {
+      "set" : {
+        "field": "event.outcome",
+        "value": "failure",
+        "if": "ctx.checkpoint?.audit_status == 'Failure')"
+      }
+    },
+    {
+      "set" : {
+        "field": "event.outcome",
+        "value": "failure",
+        "if": "['Drop', 'Reject', 'Block', 'Prevent'].contains(ctx.checkpoint?.rule_action)"
       }
     },
     {
@@ -510,6 +582,22 @@
       }
     },
     {
+      "rename": {
+        "field": "checkpoint.ifname",
+        "target_field": "observer.ingress.interface.name",
+        "ignore_missing": true,
+        "if": "ctx.network?.direction == 'inbound'"
+      }
+    },
+    {
+      "rename": {
+        "field": "checkpoint.client_inbound_interface",
+        "target_field": "observer.egress.interface.name",
+        "ignore_missing": true,
+        "if": "ctx.network?.direction == 'outbound'"
+      }
+    },
+    {
       "rename" : {
         "field": "checkpoint.type",
         "target_field": "observer.type",
@@ -518,9 +606,24 @@
     },
     {
       "rename" : {
-        "field": "checkpoint.endpoint_ip",
+        "field": "checkpoint.origin",
+        "target_field": "observer.name",
+        "ignore_missing": true
+      }
+    },
+    {
+      "rename" : {
+        "field": "checkpoint.origin_ip",
         "target_field": "observer.ip",
         "ignore_missing": true
+      }
+    },
+    {
+      "rename" : {
+        "field": "checkpoint.endpoint_ip",
+        "target_field": "observer.ip",
+        "ignore_missing": true,
+        "if": "ctx.observer?.ip == null"
       }
     },
     {
@@ -612,17 +715,9 @@
     },
     {
       "rename" : {
-        "field": "checkpoint.match_id",
-        "target_field": "rule.id",
-        "ignore_missing": true
-      }
-    },
-    {
-      "rename" : {
         "field": "checkpoint.malware_rule_id",
         "target_field": "rule.id",
-        "ignore_missing": true,
-        "if": "ctx.rule?.id == null"
+        "ignore_missing": true
       }
     },
     {
@@ -700,13 +795,6 @@
         "target_field": "rule.uuid",
         "ignore_missing": true,
         "if": "ctx.rule?.uuid == null"
-      }
-    },
-    {
-      "rename": {
-        "field": "checkpoint.s_port",
-        "target_field": "source.port",
-        "ignore_missing": true
       }
     },
     {
@@ -841,7 +929,7 @@
     },
     {
       "remove" : {
-        "field": ["checkpoint.client_outbound_packets", "checkpoint.client_outbound_bytes", "checkpoint.server_outbound_packets", "checkpoint.server_outbound_bytes", "checkpoint.product", "checkpoint.uid", "checkpoint.administrator"],
+        "field": ["checkpoint.client_outbound_packets", "checkpoint.client_outbound_bytes", "checkpoint.server_outbound_packets", "checkpoint.server_outbound_bytes", "checkpoint.product", "checkpoint.uid", "checkpoint.administrator", "checkpoint.dst", "checkpoint.src", "checkpoint.service", "checkpoint.s_port", "checkpoint.ifname"],
         "ignore_missing": true
       }
     }

@@ -1,46 +1,51 @@
+[role="xpack"]
+
+
 :modulename: checkpoint
-:has-dashboards: true
+:has-dashboards: false
 
-== checkpoint module
+== Checkpoint module
 
-This is the checkpoint module.
+This is a module for Checkpoint firewall logs. It supports logs from the Log Exporter in the Syslog format.
+
+
 
 include::../include/what-happens.asciidoc[]
 
 include::../include/gs-link.asciidoc[]
 
-[float]
-=== Compatibility
-
-TODO: document with what versions of the software is this tested
-
 include::../include/configuring-intro.asciidoc[]
 
-TODO: provide an example configuration
+The module is by default configured to run via syslog on port 9001.
 
-:fileset_ex: {fileset}
+
+:fileset_ex: firewall
 
 include::../include/config-option-intro.asciidoc[]
 
-TODO: document the variables from each fileset. If you're describing a variable
-that's common to other modules, you can reuse shared descriptions by including
-the relevant file. For example:
+==== `firewall` fileset settings
 
-[float]
-==== `{fileset}` log fileset settings
+Example config:
+
+[source,yaml]
+----
+- module: checkpoint
+  firewall:
+    var.syslog_host: 0.0.0.0
+    var.syslog_port: 9001
+    var.log_level: 5
+----
 
 include::../include/var-paths.asciidoc[]
 
-[float]
-=== Example dashboard
+*`var.syslog_host`*::
 
-This module comes with a sample dashboard. For example:
+The interface to listen to UDP based syslog traffic. Defaults to localhost.
+Set to 0.0.0.0 to bind to all available interfaces.
 
-TODO: include an image of a sample dashboard. If you do not include a dashboard,
-remove this section and set `:has-dashboards: false` at the top of this file.
+*`var.syslog_port`*::
 
-:has-dashboards!:
+The UDP port to listen for syslog traffic. Defaults to 9001.
 
-:fileset_ex!:
 
 :modulename!:
