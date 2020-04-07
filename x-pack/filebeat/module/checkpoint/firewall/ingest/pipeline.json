@@ -33,14 +33,14 @@
     {
       "remove": {
         "field": [
-          "syslog5425_sd",
-          "syslog5425_app",
-          "syslog5425_host",
-          "syslog5425_msgid",
-          "syslog5425_pri",
-          "syslog5425_proc",
-          "syslog5425_ts",
-          "syslog5425_ver",
+          "syslog5424_sd",
+          "syslog5424_app",
+          "syslog5424_host",
+          "syslog5424_msgid",
+          "syslog5424_pri",
+          "syslog5424_proc",
+          "syslog5424_ts",
+          "syslog5424_ver",
           "message",
           "host"
         ],
