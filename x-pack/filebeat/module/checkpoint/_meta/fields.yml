@@ -1,7 +1,5 @@
 - key: checkpoint
-  title: "checkpoint"
-  default_field: false
-  release: ga
+  title: Checkpoint
   description: >
     Module for parsing Checkpoint syslog.
   fields:

@@ -42,7 +42,7 @@
           "syslog5425_ts",
           "syslog5425_ver",
           "message",
-          "host
+          "host"
         ],
         "ignore_missing": true
       }
@@ -131,14 +131,14 @@
     {
       "set" : {
         "field": "source.packets",
-        "value": "{{ctx.checkpoint?.client_outbound_packets}}",
+        "value": "{{ctx.checkpoint.client_outbound_packets}}",
         "if": "ctx.checkpoint?.client_outbound_packets != null"
       }
     },
     {
       "set" : {
         "field": "client.packets",
-        "value": "{{ctx.checkpoint?.client_outbound_packets}}",
+        "value": "{{ctx.checkpoint.client_outbound_packets}}",
         "if": "ctx.checkpoint?.client_outbound_packets != null"
       }
     },
@@ -244,14 +244,14 @@
       "set" : {
         "field": "event.outcome",
         "value": "success",
-        "if": "ctx.checkpoint?.audit_status == 'Success')"
+        "if": "ctx.checkpoint?.audit_status == 'Success'"
       }
     },
     {
       "set" : {
         "field": "event.outcome",
         "value": "failure",
-        "if": "ctx.checkpoint?.audit_status == 'Failure')"
+        "if": "ctx.checkpoint?.audit_status == 'Failure'"
       }
     },
     {
