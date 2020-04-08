@@ -67,6 +67,13 @@
     },
     {
       "set": {
+        "field": "observer.type",
+        "value": "firewall",
+        "if": "ctx.checkpoint?.type == null"
+      }
+    },
+    {
+      "set": {
         "field": "observer.product",
         "value": "{{checkpoint.product}}",
         "if": "ctx.checkpoint?.product != null"
