@@ -304,11 +304,6 @@
       description: >
         Email categories. Possible values: spam/not spam/phishing.
 
-    - name: email_control
-      type: keyword
-      description: >
-        Engine name.
-
     - name: email_control_analysis
       type: keyword
       description: >
@@ -318,11 +313,6 @@
       type: keyword
       description: >
         "Infected"/description of a failure.
-
-    - name: triggered_by
-      type: keyword
-      description: >
-        Additional explanation how the security gateway enforced the connection.
 
     - name: original_queue_id
       type: keyword
@@ -379,11 +369,6 @@
       description: >
         Application ID.
 
-    - name: app_properties
-      type: keyword
-      description: >
-        Application categories.
-
     - name: app_sig_id
       type: keyword
       description: >
@@ -413,16 +398,6 @@
       type: integer
       description: >
         Indicates whether the session was actually date limited.
-
-    - name: dropped_outgoing
-      type: integer
-      description: >
-        Amount of outgoing dropped packets.
-
-    - name: dropped_incoming
-      type: integer
-      description: >
-        Amount of incoming dropped packets.
 
     - name: dropped_total
       type: integer
@@ -723,11 +698,6 @@
       type: integer
       description: >
         Number of scanned directories in repository.
-
-    - name: dlp_fingerprint_short_status
-      type: keyword
-      description: >
-        Scan status - short format
 
     - name: dlp_repository_not_scanned_directories_percentage
       type: integer
@@ -1144,11 +1114,6 @@
       description: >
         Translated URL.
 
-    - name: outgoing_url
-      type: keyword
-      description: >
-        Untranslated URL, as seen inside the internal network.
-
     - name: reject_id
       type: keyword
       description: >
@@ -1158,11 +1123,6 @@
       type: keyword
       description: >
         The file share protocol used in mobile acess file share application.
-
-    - name: session_uid
-      type: keyword
-      description: >
-        Mobile Access session identification.
 
     - name: app_package
       type: keyword
@@ -1338,11 +1298,6 @@
       type: integer
       description: >
         Subscriber end int which will be used for NAT.
-
-    - name: drop_reason
-      type: keyword
-      description: >
-        Aggregated logs of dropped packets.
 
     - name: packet_amount
       type: integer
@@ -1600,7 +1555,7 @@
           Matched object name on destination column.
 
     - name: drop_reason
-      type: integer
+      type: keyword
       description: >
         Drop reason description.
 
@@ -1678,11 +1633,6 @@
       type: integer
       description: >
         Number of incoming bytes dropped when using UP-limit feature.
-
-    - name: dropped_total
-      type: integer
-      description: >
-        Total bytes dropped when using UP-limit feature.
 
     - name: media_type
       type: keyword
@@ -1958,11 +1908,6 @@
       type: keyword
       description: >
         Site name.
-
-    - name: cvpn_category
-      type: keyword
-      description: >
-        Endpoint security on demand.
 
     - name: esod_rule_name
       type: keyword
