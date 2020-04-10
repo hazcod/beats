@@ -8,16 +8,15 @@
 
 This is a module for Checkpoint firewall logs. It supports logs from the Log Exporter in the Syslog format.
 
-
-
-include::../include/what-happens.asciidoc[]
-
 include::../include/gs-link.asciidoc[]
 
+
+[float]
+=== Compatibility
+
+This module has been tested against Checkpoint Log Exporter on R80.X but should also work with R77.30.
+
 include::../include/configuring-intro.asciidoc[]
-
-The module is by default configured to run via syslog on port 9001.
-
 
 :fileset_ex: firewall
 
@@ -33,7 +32,6 @@ Example config:
   firewall:
     var.syslog_host: 0.0.0.0
     var.syslog_port: 9001
-    var.log_level: 5
 ----
 
 include::../include/var-paths.asciidoc[]
